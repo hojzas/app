@@ -1,6 +1,7 @@
 package com.example.app
 
 import android.os.Bundle
+import android.util.Log
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayout
@@ -8,12 +9,19 @@ import androidx.viewpager.widget.ViewPager
 import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Button
+import android.widget.Toast
+import androidx.recyclerview.widget.RecyclerView
 import com.example.app.ui.main.SectionsPagerAdapter
 import com.example.app.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
+
+    private lateinit var btnAdd: Button
+    private lateinit var rv: RecyclerView
+    private lateinit var sqlHelper: SQLiteHelper
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,8 +37,35 @@ class MainActivity : AppCompatActivity() {
         val fab: FloatingActionButton = binding.fab
 
         fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+            Snackbar.make(view, "Tap", Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show()
+        }
+
+        initView()
+        sqlHelper = SQLiteHelper(this)
+
+        btnAdd.setOnClickListener {
+            addNewTestData()
+            val list = sqlHelper.getAllTestData()
+            Log.e("dsf", "${list.size}")
+        }
+    }
+
+    private fun initView() {
+        btnAdd = binding.btnAddNew
+        rv = binding.rvTest
+    }
+
+    private fun addNewTestData() {
+        val name = "test data"
+        val bool = true
+
+        val testData = TestData(-1, name, bool)
+        val status = sqlHelper.insertTestData(testData)
+        if (status > -1) {
+            Toast.makeText(this, "Added", Toast.LENGTH_SHORT).show()
+        } else {
+            Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show()
         }
     }
 }
