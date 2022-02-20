@@ -1,17 +1,18 @@
 package com.example.app
 
-class TestData {
+class Job {
     var id: Int = -1
     var name: String = ""
-    var bool: Boolean = false
+    var wage: Float = 100F
 
-    constructor(id: Int, name: String, bool: Boolean) {
+    constructor(id: Int, name: String, wage: Float) {
         this.id = id
         this.name = name
-        this.bool = bool
+        this.wage = wage
     }
 
     constructor()
-
-
 }
+
+
+

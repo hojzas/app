@@ -7,8 +7,6 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayout
 import androidx.viewpager.widget.ViewPager
 import androidx.appcompat.app.AppCompatActivity
-import android.view.Menu
-import android.view.MenuItem
 import android.widget.Button
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
@@ -58,9 +56,9 @@ class MainActivity : AppCompatActivity() {
 
     private fun addNewTestData() {
         val name = "test data"
-        val bool = true
+        val wage = 140F
 
-        val testData = TestData(-1, name, bool)
+        val testData = Job(-1, name, wage)
         val status = sqlHelper.insertTestData(testData)
         if (status > -1) {
             Toast.makeText(this, "Added", Toast.LENGTH_SHORT).show()
